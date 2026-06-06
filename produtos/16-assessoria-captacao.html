@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessoria em Captação | Nexum</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: #F3F4F6; color: #1F2937; }
+        .btn-primary { background: linear-gradient(95deg, #00E699 0%, #00cc88 100%); transition: all 0.3s ease; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,230,153,0.3); }
+        .modal-overlay { background-color: rgba(0,0,0,0.85); backdrop-filter: blur(8px); animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .modal-content { animation: slideUp 0.4s cubic-bezier(0.16,1,0.3,1); }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        .hero-bg {
+            background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://images.pexels.com/photos/6646917/pexels-photo-6646917.jpeg?auto=compress&cs=tinysrgb&w=1600');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+<body>
+
+<div id="leadModal" class="fixed inset-0 z-[9999] flex items-center justify-center modal-overlay transition-all duration-300" style="display: none;">
+    <div class="modal-content bg-white rounded-3xl max-w-lg w-full mx-5 relative shadow-2xl border border-gray-100 overflow-hidden">
+        <button id="closeModalBtn" class="absolute top-5 right-5 text-gray-400 hover:text-gray-600 transition text-2xl z-10"><i class="fas fa-times-circle"></i></button>
+        <div class="p-6 md:p-8">
+            <div class="text-center mb-6"><div class="w-16 h-16 rounded-2xl bg-[#00E699]/15 flex items-center justify-center mx-auto mb-4"><i class="fas fa-chart-line text-3xl text-[#00E699]"></i></div><h3 class="text-2xl md:text-3xl font-bold text-gray-900">Estruturação <span class="text-[#00E699]">exclusiva</span></h3><p class="text-gray-500 mt-2 text-sm">Receba uma análise gratuita do seu cenário financeiro</p></div>
+            <form id="leadForm" class="space-y-4">
+                <div><label class="block text-gray-700 text-sm font-medium mb-1">Nome completo *</label><input type="text" id="nomeLead" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#00E699]"></div>
+                <div><label class="block text-gray-700 text-sm font-medium mb-1">E-mail corporativo *</label><input type="email" id="emailLead" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#00E699]"></div>
+                <div><label class="block text-gray-700 text-sm font-medium mb-1">WhatsApp / Telefone *</label><input type="tel" id="telefoneLead" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#00E699]"></div>
+                <div><label class="block text-gray-700 text-sm font-medium mb-1">Necessidade principal</label><select id="necessidadeLead" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#00E699]"><option value="Capital de Giro">Capital de Giro</option><option value="Reestruturação Financeira">Reestruturação Financeira</option><option value="Home Equity">Home Equity</option><option value="Antecipação de Recebíveis">Antecipação de Recebíveis</option><option value="Outros">Outros</option></select></div>
+                <button type="submit" class="btn-primary w-full py-3.5 rounded-xl text-white font-bold shadow-lg transition-all flex items-center justify-center gap-2">Quero estruturar minha operação <i class="fas fa-arrow-right"></i></button>
+            </form>
+            <div id="leadSuccessMsg" class="hidden mt-4 text-center text-[#00E699] text-sm font-semibold p-3 rounded-xl bg-[#00E699]/10"><i class="fas fa-check-circle mr-1"></i> Redirecionando para o WhatsApp...</div>
+        </div>
+    </div>
+</div>
+
+<header class="w-full fixed top-0 z-50 bg-white/95 backdrop-blur-lg border-b border-gray-200">
+    <div class="container mx-auto px-6 md:px-8 lg:px-12 py-4 flex justify-between items-center">
+        <a href="../index.html" class="flex items-center"><img src="https://raw.githubusercontent.com/musasimorro/AeC-investimentos/refs/heads/main/1000078487-removebg-preview.png" class="h-30 md:h-14 w-auto object-contain" style="max-width: 180px;"></a>
+        <div class="hidden md:flex items-center space-x-8"><a href="../index.html" class="text-gray-700 hover:text-[#00E699] transition text-sm font-medium">INÍCIO</a><a href="../index.html#produtos" class="text-gray-700 hover:text-[#00E699] transition text-sm font-medium">Produtos</a><a href="../index.html#sobre" class="text-gray-700 hover:text-[#00E699] transition text-sm font-medium">Sobre</a><a href="../index.html#especialistas" class="text-gray-700 hover:text-[#00E699] transition text-sm font-medium">Especialistas</a><a href="#" id="btnFalarHeader" class="btn-primary px-5 py-2.5 rounded-full text-white font-semibold text-sm shadow-md transition">ENTRAR EM CONTATO</a></div>
+        <div class="md:hidden"><button id="menuBtn" class="text-gray-700 text-2xl"><i class="fas fa-bars"></i></button></div>
+    </div>
+</header>
+
+<main>
+    <section class="hero-bg min-h-[50vh] flex items-center justify-center text-center">
+        <div class="container mx-auto px-6"><div class="max-w-3xl mx-auto"><div class="inline-block bg-white/20 backdrop-blur-sm rounded-full px-4 py-1 mb-4"><span class="text-white text-sm font-semibold tracking-wide">INVESTIMENTOS</span></div><h1 class="text-5xl md:text-6xl font-bold text-white mb-4">ASSESSORIA EM CAPTAÇÃO</h1><div class="w-20 h-1 bg-[#00E699] mx-auto mb-6"></div><p class="text-white/90 text-lg max-w-2xl mx-auto">Conectamos sua empresa às melhores fontes de recursos</p></div></div>
+    </section>
+
+    <div class="container mx-auto px-6 py-12 max-w-4xl">
+        <div class="bg-white rounded-3xl shadow-lg overflow-hidden">
+            <div class="p-6 md:p-8 space-y-8">
+                <div><div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-full bg-[#00E699]/15 flex items-center justify-center"><i class="fas fa-question-circle text-[#00E699] text-xl"></i></div><h2 class="text-2xl font-bold text-gray-900">O que é?</h2></div><p class="text-gray-700 leading-relaxed pl-14">Assessoria em Captação de Recursos Financeiros é um serviço especializado que conecta empresas e empreendedores às melhores fontes de crédito, investidores e fundos de investimento, estruturando a operação ideal para cada necessidade.</p></div>
+                <div><div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-full bg-[#00E699]/15 flex items-center justify-center"><i class="fas fa-calendar-alt text-[#00E699] text-xl"></i></div><h2 class="text-2xl font-bold text-gray-900">Quando contratar?</h2></div><p class="text-gray-700 leading-relaxed pl-14">Quando sua empresa precisa de recursos para expansão, capital de giro, projetos específicos, ou quando você não está satisfeito com as condições oferecidas pelo seu banco atual e deseja acessar um leque maior de opções no mercado financeiro.</p></div>
+                <div><div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-full bg-[#00E699]/15 flex items-center justify-center"><i class="fas fa-star text-[#00E699] text-xl"></i></div><h2 class="text-2xl font-bold text-gray-900">Vantagens</h2></div><ul class="space-y-3 pl-14"><li class="flex items-start gap-2"><i class="fas fa-check-circle text-[#00E699] mt-1"></i> <span class="text-gray-700">Acesso a mais de 30 instituições financeiras;</span></li><li class="flex items-start gap-2"><i class="fas fa-check-circle text-[#00E699] mt-1"></i> <span class="text-gray-700">Estruturação personalizada da operação;</span></li><li class="flex items-start gap-2"><i class="fas fa-check-circle text-[#00E699] mt-1"></i> <span class="text-gray-700">Negociação das melhores taxas e prazos;</span></li><li class="flex items-start gap-2"><i class="fas fa-check-circle text-[#00E699] mt-1"></i> <span class="text-gray-700">Acompanhamento até a liberação dos recursos.</span></li></ul></div>
+                <div><div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-full bg-[#00E699]/15 flex items-center justify-center"><i class="fas fa-clipboard-list text-[#00E699] text-xl"></i></div><h2 class="text-2xl font-bold text-gray-900">Características</h2></div><ul class="space-y-3 pl-14"><li class="flex items-start gap-2"><i class="fas fa-check-circle text-[#00E699] mt-1"></i> <span class="text-gray-700">Captação para empresas de todos os portes;</span></li><li class="flex items-start gap-2"><i class="fas fa-check-circle text-[#00E699] mt-1"></i> <span class="text-gray-700">Linhas de crédito: BNDES, FINEP, bancos comerciais, fundos de investimento;</span></li><li class="flex items-start gap-2"><i class="fas fa-check-circle text-[#00E699] mt-1"></i> <span class="text-gray-700">Honorários baseados no sucesso da captação.</span></li></ul></div>
+                <div class="text-center pt-6"><a href="#" id="btnContato" class="btn-primary inline-block px-10 py-4 rounded-full text-white font-bold text-lg shadow-xl transition-all hover:scale-105">ENTRAR EM CONTATO <i class="fas fa-arrow-right ml-2"></i></a></div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-gray-900 pt-12 pb-6 mt-8"><div class="container mx-auto px-6 text-center"><p class="text-gray-500 text-sm">&copy; 2026 Nexum. Todos os direitos reservados.</p></div></footer>
+
+<script>
+    const modal = document.getElementById('leadModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const leadForm = document.getElementById('leadForm');
+    const successMsg = document.getElementById('leadSuccessMsg');
+    const numeroWhatsApp = "5571991844444";
+    const produtoNome = "ASSESSORIA EM CAPTAÇÃO";
+    function abrirModal() { modal.style.display = 'flex'; leadForm.style.display = 'block'; successMsg.classList.add('hidden'); leadForm.reset(); }
+    function fecharModal() { modal.style.display = 'none'; }
+    if(closeModalBtn) closeModalBtn.onclick = fecharModal;
+    if(modal) modal.onclick = (e) => { if(e.target === modal) fecharModal(); };
+    document.querySelectorAll('#btnFalarHeader, #btnContato').forEach(btn => { if(btn) btn.onclick = (e) => { e.preventDefault(); abrirModal(); }; });
+    if(leadForm) { leadForm.onsubmit = (e) => { e.preventDefault(); const nome = document.getElementById('nomeLead').value.trim(); const email = document.getElementById('emailLead').value.trim(); const telefone = document.getElementById('telefoneLead').value.trim(); const necessidade = document.getElementById('necessidadeLead').options[document.getElementById('necessidadeLead').selectedIndex].text; if(!nome || !email || !telefone) return alert('Preencha todos os campos'); const msg = `🟢 *NOVO LEAD - ${produtoNome}* 🟢%0A%0A👤 Nome: ${encodeURIComponent(nome)}%0A📧 E-mail: ${encodeURIComponent(email)}%0A📱 Telefone: ${encodeURIComponent(telefone)}%0A🎯 Necessidade: ${encodeURIComponent(necessidade)}%0A📦 Produto: ${produtoNome}`; window.open(`https://wa.me/${numeroWhatsApp}?text=${msg}`, '_blank'); leadForm.style.display = 'none'; successMsg.classList.remove('hidden'); setTimeout(fecharModal, 2500); }; }
+    const menuBtn = document.getElementById('menuBtn');
+    if(menuBtn) { let mobileCreated = false; menuBtn.onclick = () => { if(!mobileCreated) { const div = document.createElement('div'); div.id = 'mobileMenu'; div.className = 'md:hidden bg-white border-t border-gray-200 px-6 py-4 flex flex-col space-y-4 shadow-lg absolute top-full left-0 right-0'; div.innerHTML = `<a href="../index.html" class="text-gray-700 hover:text-[#00E699] py-2 transition">INÍCIO</a><a href="../index.html#produtos" class="text-gray-700 hover:text-[#00E699] py-2 transition">Produtos</a><a href="../index.html#sobre" class="text-gray-700 hover:text-[#00E699] py-2 transition">Sobre</a><a href="../index.html#especialistas" class="text-gray-700 hover:text-[#00E699] py-2 transition">Especialistas</a><a href="#" id="mobileContato" class="btn-primary text-center rounded-full py-2 text-white font-semibold">ENTRAR EM CONTATO</a>`; document.querySelector('header').appendChild(div); document.getElementById('mobileContato').onclick = (e) => { e.preventDefault(); abrirModal(); }; mobileCreated = true; } else { const existing = document.getElementById('mobileMenu'); if(existing) existing.classList.toggle('hidden'); } }; }
+</script>
+</body>
+</html>
